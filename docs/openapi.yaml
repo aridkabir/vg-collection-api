@@ -1,0 +1,140 @@
+openapi: 3.0.3
+
+info:
+  title: Video Game Collection Database API
+  description: API documentation for the Video Game Collection Database API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000/api
+    description: Local server
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Auth
+    description: User authentication endpoints
+  - name: Games
+    description: Operations related to video games
+  - name: Platforms
+    description: Operations related to gaming platforms
+  - name: Collections
+    description: Operations related to user game collections
+
+paths:
+  /auth/signup:
+    post:
+      tags:
+        - Auth
+      summary: Register a new user
+      description: Create a new user account.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthCredentials'
+            example:
+              email: newuser@example.com
+              password: Password123!
+      responses:
+        '201':
+          description: User created successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Authenticate user
+      description: Log in and receive a JWT.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthCredentials'
+            example:
+              email: user@example.com
+              password: Password123!
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              example:
+                token: example.jwt.token
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    AuthCredentials:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: user@example.com
+        password:
+          type: string
+          example: Password123!
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Error message
+
+  responses:
+    BadRequest:
+      description: Bad request due to missing or invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    Unauthorized:
+      description: User is not authenticated or credentials are invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    Forbidden:
+      description: User does not have permission
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    Conflict:
+      description: Resource already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
