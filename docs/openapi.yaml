@@ -9,9 +9,6 @@ servers:
   - url: http://localhost:3000/api
     description: Local server
 
-security:
-  - bearerAuth: []
-
 tags:
   - name: Auth
     description: User authentication endpoints
@@ -42,6 +39,12 @@ paths:
       responses:
         '201':
           description: User created successfully
+          content:
+            application/json:
+              example:
+                id: 3
+                email: newuser@example.com
+                role: user
         '400':
           $ref: '#/components/responses/BadRequest'
         '409':
@@ -69,11 +72,260 @@ paths:
           content:
             application/json:
               example:
-                token: example.jwt.token
+                token: jwt.token.here
+                user:
+                  id: 2
+                  email: admin@example.com
+                  role: admin
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+
+  /games:
+    get:
+      tags:
+        - Games
+      summary: Get all games
+      description: Retrieve all games from the database.
+      security: []
+      responses:
+        '200':
+          description: Games retrieved successfully
+          content:
+            application/json:
+              example:
+                - id: 1
+                  title: Elden Ring
+                  genre: RPG
+                  releaseYear: 2022
+                  createdAt: '2026-04-28T00:00:00.000Z'
+                  platforms:
+                    - platform:
+                        id: 25
+                        name: PlayStation®4
+                        manufacturer: Sony
+                    - platform:
+                        id: 26
+                        name: Xbox One®
+                        manufacturer: Microsoft
+                    - platform:
+                        id: 28
+                        name: Microsoft Windows 10+®
+                        manufacturer: Microsoft
+                    - platform:
+                        id: 32
+                        name: PlayStation®5
+                        manufacturer: Sony
+                    - platform:
+                        id: 33
+                        name: Xbox Series X®
+                        manufacturer: Microsoft
+
+    post:
+      tags:
+        - Games
+      summary: Create a new game
+      description: Create a new game. Admin only. At least one platform is required.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameInput'
+            example:
+              title: Persona 5 Royal
+              genre: JRPG
+              releaseYear: 2020
+              platformIds:
+                - 25
+                - 26
+                - 28
+                - 29
+                - 32
+                - 33
+      responses:
+        '201':
+          description: Game created successfully
+          content:
+            application/json:
+              example:
+                id: 4
+                title: Persona 5 Royal
+                genre: JRPG
+                releaseYear: 2020
+                createdAt: '2026-04-28T00:00:00.000Z'
+                platforms:
+                  - platform:
+                      id: 25
+                      name: PlayStation®4
+                      manufacturer: Sony
+                  - platform:
+                      id: 26
+                      name: Xbox One®
+                      manufacturer: Microsoft
+                  - platform:
+                      id: 28
+                      name: Microsoft Windows 10+®
+                      manufacturer: Microsoft
+                  - platform:
+                      id: 29
+                      name: Nintendo Switch™
+                      manufacturer: Nintendo
+                  - platform:
+                      id: 32
+                      name: PlayStation®5
+                      manufacturer: Sony
+                  - platform:
+                      id: 33
+                      name: Xbox Series X®
+                      manufacturer: Microsoft
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /games/{id}:
+    get:
+      tags:
+        - Games
+      summary: Get a game by ID
+      description: Retrieve a single game by ID.
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/GameId'
+      responses:
+        '200':
+          description: Game retrieved successfully
+          content:
+            application/json:
+              example:
+                id: 1
+                title: Elden Ring
+                genre: RPG
+                releaseYear: 2022
+                createdAt: '2026-04-28T00:00:00.000Z'
+                platforms:
+                  - platform:
+                      id: 25
+                      name: PlayStation®4
+                      manufacturer: Sony
+                  - platform:
+                      id: 26
+                      name: Xbox One®
+                      manufacturer: Microsoft
+                  - platform:
+                      id: 28
+                      name: Microsoft Windows 10+®
+                      manufacturer: Microsoft
+                  - platform:
+                      id: 32
+                      name: PlayStation®5
+                      manufacturer: Sony
+                  - platform:
+                      id: 33
+                      name: Xbox Series X®
+                      manufacturer: Microsoft
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+        - Games
+      summary: Update a game
+      description: Update a game by ID. Admin only. At least one platform is required.
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/GameId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameInput'
+            example:
+              title: Persona 5 Royal
+              genre: JRPG
+              releaseYear: 2020
+              platformIds:
+                - 25
+                - 26
+                - 28
+                - 29
+                - 32
+                - 33
+      responses:
+        '200':
+          description: Game updated successfully
+          content:
+            application/json:
+              example:
+                id: 1
+                title: Persona 5 Royal
+                genre: JRPG
+                releaseYear: 2020
+                createdAt: '2026-04-28T00:00:00.000Z'
+                platforms:
+                  - platform:
+                      id: 25
+                      name: PlayStation®4
+                      manufacturer: Sony
+                  - platform:
+                      id: 26
+                      name: Xbox One®
+                      manufacturer: Microsoft
+                  - platform:
+                      id: 28
+                      name: Microsoft Windows 10+®
+                      manufacturer: Microsoft
+                  - platform:
+                      id: 29
+                      name: Nintendo Switch™
+                      manufacturer: Nintendo
+                  - platform:
+                      id: 32
+                      name: PlayStation®5
+                      manufacturer: Sony
+                  - platform:
+                      id: 33
+                      name: Xbox Series X®
+                      manufacturer: Microsoft
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Games
+      summary: Delete a game
+      description: Delete a game by ID. Admin only.
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/GameId'
+      responses:
+        '204':
+          description: Game deleted successfully. No content returned.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
 components:
   securitySchemes:
@@ -81,6 +333,16 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+
+  parameters:
+    GameId:
+      name: id
+      in: path
+      required: true
+      description: Game ID
+      schema:
+        type: integer
+        example: 1
 
   schemas:
     AuthCredentials:
@@ -91,10 +353,37 @@ components:
       properties:
         email:
           type: string
-          example: user@example.com
+          example: admin@example.com
         password:
           type: string
           example: Password123!
+
+    GameInput:
+      type: object
+      required:
+        - title
+        - platformIds
+      properties:
+        title:
+          type: string
+          example: Persona 5 Royal
+        genre:
+          type: string
+          example: JRPG
+        releaseYear:
+          type: integer
+          example: 2020
+        platformIds:
+          type: array
+          items:
+            type: integer
+          example:
+            - 25
+            - 26
+            - 28
+            - 29
+            - 32
+            - 33
 
     Error:
       type: object
@@ -105,36 +394,36 @@ components:
 
   responses:
     BadRequest:
-      description: Bad request due to missing or invalid input
+      description: Bad Request - invalid ID or missing required fields
       content:
         application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+          example:
+            error: Invalid request
 
     Unauthorized:
-      description: User is not authenticated or credentials are invalid
+      description: Unauthorized - user is not authenticated
       content:
         application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+          example:
+            error: Access token required
 
     Forbidden:
-      description: User does not have permission
+      description: Forbidden - user is authenticated but not authorized
       content:
         application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+          example:
+            error: Admin access required
 
     NotFound:
-      description: Resource not found
+      description: Not Found - resource does not exist
       content:
         application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+          example:
+            error: Resource not found
 
     Conflict:
-      description: Resource already exists
+      description: Conflict - resource already exists
       content:
         application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+          example:
+            error: Email already exists

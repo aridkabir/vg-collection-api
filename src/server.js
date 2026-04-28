@@ -4,10 +4,23 @@ import swaggerUi from 'swagger-ui-express';
 import YAML from 'js-yaml';
 import fs from 'fs';
 
+
 import authRoutes from './routes/authRoutes.js';
+import gameRoutes from './routes/gameRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+import { execSync } from 'child_process';
+
+// Seed the database on startup
+if (process.env.NODE_ENV !== 'test') {
+  try {
+    execSync('node prisma/seed.js', { stdio: 'inherit' });
+  } catch (err) {
+    console.error('Seed failed:', err);
+  }
+}
 
 app.use(express.json());
 
@@ -25,6 +38,7 @@ try {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/api/auth', authRoutes);
+app.use('/api/games', gameRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running');

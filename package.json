@@ -7,15 +7,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "node --env-file=.env --watch src/server.js",
+    "dev": "node --env-file=.env --watch --watch-path=src --watch-path=docs --watch-path=prisma src/server.js",
+    "start": "node src/server.js",
     "seed:dev": "node prisma/seed.js"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.29.0",
-    "eslint": "^9.29.0",
-    "eslint-config-prettier": "^10.1.5",
-    "globals": "^16.2.0",
-    "prettier": "^3.6.1"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
@@ -25,9 +19,14 @@
     "js-yaml": "^4.1.1",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.10.1",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
     "prisma": "^6.19.3",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1",
-    "yamljs": "^0.3.0"
+    "@eslint/js": "^9.29.0",
+    "eslint": "^9.29.0",
+    "eslint-config-prettier": "^10.1.5",
+    "globals": "^16.2.0",
+    "prettier": "^3.6.1"
   }
 }
