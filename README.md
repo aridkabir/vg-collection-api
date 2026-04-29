@@ -9,7 +9,7 @@ A REST API for managing a video game collection. Users can create accounts, mana
 - Node.js
 - Express
 - PostgreSQL
-- Prisma ORM
+- Prisma
 - JWT Authentication
 - Swagger (OpenAPI)
 
