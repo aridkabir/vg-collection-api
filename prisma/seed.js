@@ -34,48 +34,47 @@ async function main() {
 
   await prisma.platform.createMany({
     data: [
-      { name: 'Sega Master System™', manufacturer: 'Sega' },
-      { name: 'Nintendo Entertainment System™ (NES) / Family Computer (Famicom)', manufacturer: 'Nintendo' },
-      { name: 'Game Boy®', manufacturer: 'Nintendo' },
-      { name: 'Sega Genesis™ / Mega Drive', manufacturer: 'Sega' },
-      { name: 'Super Nintendo Entertainment System™ (SNES) / Super Famicom', manufacturer: 'Nintendo' },
-      { name: 'Sega CD™ / Mega CD', manufacturer: 'Sega' },
-      { name: 'PlayStation®', manufacturer: 'Sony' },
-      { name: 'Sega Saturn™', manufacturer: 'Sega' },
-      { name: 'Microsoft Windows 95®', manufacturer: 'Microsoft' },
-      { name: 'Nintendo 64™', manufacturer: 'Nintendo' },
-      { name: 'Game Boy Color®', manufacturer: 'Nintendo' },
-      { name: 'Dreamcast™', manufacturer: 'Sega' },
-      { name: 'PlayStation®2', manufacturer: 'Sony' },
-      { name: 'Game Boy Advance®', manufacturer: 'Nintendo' },
-      { name: 'Nintendo GameCube™', manufacturer: 'Nintendo' },
-      { name: 'Xbox®', manufacturer: 'Microsoft' },
-      { name: 'Microsoft Windows XP®', manufacturer: 'Microsoft' },
-      { name: 'Nintendo DS™', manufacturer: 'Nintendo' },
-      { name: 'Xbox 360®', manufacturer: 'Microsoft' },
-      { name: 'PlayStation®3', manufacturer: 'Sony' },
-      { name: 'Wii™', manufacturer: 'Nintendo' },
-      { name: 'Microsoft Windows 7®', manufacturer: 'Microsoft' },
-      { name: 'Nintendo 3DS™', manufacturer: 'Nintendo' },
-      { name: 'Wii U™', manufacturer: 'Nintendo' },
-      { name: 'PlayStation®4', manufacturer: 'Sony' },
-      { name: 'Xbox One®', manufacturer: 'Microsoft' },
-      { name: 'New Nintendo 3DS™', manufacturer: 'Nintendo' },
-      { name: 'Microsoft Windows 10+®', manufacturer: 'Microsoft' },
-      { name: 'Nintendo Switch™', manufacturer: 'Nintendo' },
-      { name: 'Mac OS X (Pre-10.14)', manufacturer: 'Apple' },
-      { name: 'macOS 10.15+ (Intel)', manufacturer: 'Apple' },
-      { name: 'PlayStation®5', manufacturer: 'Sony' },
-      { name: 'Xbox Series X®', manufacturer: 'Microsoft' },
-      { name: 'macOS (Apple Silicon)', manufacturer: 'Apple' },
-      { name: 'Nintendo Switch™ 2', manufacturer: 'Nintendo' },
+      { name: 'Sega Master System™', manufacturer: 'Sega', releaseYear: 1985 },
+      { name: 'Nintendo Entertainment System™ (NES) / Family Computer (Famicom)', manufacturer: 'Nintendo', releaseYear: 1985 },
+      { name: 'Game Boy®', manufacturer: 'Nintendo', releaseYear: 1989 },
+      { name: 'Sega Genesis™ / Mega Drive', manufacturer: 'Sega', releaseYear: 1989 },
+      { name: 'Super Nintendo Entertainment System™ (SNES) / Super Famicom', manufacturer: 'Nintendo', releaseYear: 1990 },
+      { name: 'Sega CD™ / Mega CD', manufacturer: 'Sega', releaseYear: 1991 },
+      { name: 'PlayStation®', manufacturer: 'Sony', releaseYear: 1994 },
+      { name: 'Sega Saturn™', manufacturer: 'Sega', releaseYear: 1994 },
+      { name: 'Microsoft Windows 95®', manufacturer: 'Microsoft', releaseYear: 1995 },
+      { name: 'Nintendo 64™', manufacturer: 'Nintendo', releaseYear: 1996 },
+      { name: 'Game Boy Color®', manufacturer: 'Nintendo', releaseYear: 1998 },
+      { name: 'Dreamcast™', manufacturer: 'Sega', releaseYear: 1998 },
+      { name: 'PlayStation®2', manufacturer: 'Sony', releaseYear: 2000 },
+      { name: 'Game Boy Advance®', manufacturer: 'Nintendo', releaseYear: 2001 },
+      { name: 'Nintendo GameCube™', manufacturer: 'Nintendo', releaseYear: 2001 },
+      { name: 'Xbox®', manufacturer: 'Microsoft', releaseYear: 2001 },
+      { name: 'Microsoft Windows XP®', manufacturer: 'Microsoft', releaseYear: 2001 },
+      { name: 'Nintendo DS™', manufacturer: 'Nintendo', releaseYear: 2004 },
+      { name: 'Xbox 360®', manufacturer: 'Microsoft', releaseYear: 2005 },
+      { name: 'PlayStation®3', manufacturer: 'Sony', releaseYear: 2006 },
+      { name: 'Wii™', manufacturer: 'Nintendo', releaseYear: 2006 },
+      { name: 'Microsoft Windows 7®', manufacturer: 'Microsoft', releaseYear: 2009 },
+      { name: 'Nintendo 3DS™', manufacturer: 'Nintendo', releaseYear: 2011 },
+      { name: 'Wii U™', manufacturer: 'Nintendo', releaseYear: 2012 },
+      { name: 'PlayStation®4', manufacturer: 'Sony', releaseYear: 2013 },
+      { name: 'Xbox One®', manufacturer: 'Microsoft', releaseYear: 2013 },
+      { name: 'New Nintendo 3DS™', manufacturer: 'Nintendo', releaseYear: 2014 },
+      { name: 'Microsoft Windows 10+®', manufacturer: 'Microsoft', releaseYear: 2015 },
+      { name: 'Nintendo Switch™', manufacturer: 'Nintendo', releaseYear: 2017 },
+      { name: 'Mac OS X (Pre-10.14)', manufacturer: 'Apple', releaseYear: 2018 },
+      { name: 'macOS 10.15+ (Intel)', manufacturer: 'Apple', releaseYear: 2019 },
+      { name: 'PlayStation®5', manufacturer: 'Sony', releaseYear: 2020 },
+      { name: 'Xbox Series X®', manufacturer: 'Microsoft', releaseYear: 2020 },
+      { name: 'macOS (Apple Silicon)', manufacturer: 'Apple', releaseYear: 2020 },
+      { name: 'Nintendo Switch™ 2', manufacturer: 'Nintendo', releaseYear: 2025 },
     ],
   });
 
   const platforms = await prisma.platform.findMany();
 
   const platformMap = {};
-
   platforms.forEach((platform) => {
     platformMap[platform.name] = platform.id;
   });
@@ -105,50 +104,20 @@ async function main() {
   });
 
   await prisma.gamePlatform.createMany({
-  data: [
-    // Elden Ring
-    {
-      gameId: eldenRing.id,
-      platformId: platformMap['PlayStation®4'],
-    },
-    {
-      gameId: eldenRing.id,
-      platformId: platformMap['Xbox One®'],
-    },
-    {
-      gameId: eldenRing.id,
-      platformId: platformMap['Microsoft Windows 10+®'],
-    },
-    {
-      gameId: eldenRing.id,
-      platformId: platformMap['PlayStation®5'],
-    },
-    {
-      gameId: eldenRing.id,
-      platformId: platformMap['Xbox Series X®'],
-    },
+    data: [
+      { gameId: eldenRing.id, platformId: platformMap['PlayStation®4'] },
+      { gameId: eldenRing.id, platformId: platformMap['Xbox One®'] },
+      { gameId: eldenRing.id, platformId: platformMap['Microsoft Windows 10+®'] },
+      { gameId: eldenRing.id, platformId: platformMap['PlayStation®5'] },
+      { gameId: eldenRing.id, platformId: platformMap['Xbox Series X®'] },
 
-    // Spider-Man 2
-    {
-      gameId: spiderMan2.id,
-      platformId: platformMap['PlayStation®5'],
-    },
-    {
-      gameId: spiderMan2.id,
-      platformId: platformMap['Microsoft Windows 10+®'],
-    },
+      { gameId: spiderMan2.id, platformId: platformMap['PlayStation®5'] },
+      { gameId: spiderMan2.id, platformId: platformMap['Microsoft Windows 10+®'] },
 
-    // Breath of the Wild
-    {
-      gameId: breathOfTheWild.id,
-      platformId: platformMap['Nintendo Switch™'],
-    },
-    {
-      gameId: breathOfTheWild.id,
-      platformId: platformMap['Nintendo Switch™ 2'],
-    },
-  ],
-});
+      { gameId: breathOfTheWild.id, platformId: platformMap['Nintendo Switch™'] },
+      { gameId: breathOfTheWild.id, platformId: platformMap['Nintendo Switch™ 2'] },
+    ],
+  });
 
   const collection = await prisma.collection.create({
     data: {
@@ -159,18 +128,9 @@ async function main() {
 
   await prisma.collectionGame.createMany({
     data: [
-      {
-        collectionId: collection.id,
-        gameId: eldenRing.id,
-      },
-      {
-        collectionId: collection.id,
-        gameId: spiderMan2.id,
-      },
-      {
-        collectionId: collection.id,
-        gameId: breathOfTheWild.id,
-      },
+      { collectionId: collection.id, gameId: eldenRing.id },
+      { collectionId: collection.id, gameId: spiderMan2.id },
+      { collectionId: collection.id, gameId: breathOfTheWild.id },
     ],
   });
 

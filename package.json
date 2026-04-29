@@ -22,11 +22,11 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "prisma": "^6.19.3",
     "@eslint/js": "^9.29.0",
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
     "globals": "^16.2.0",
-    "prettier": "^3.6.1"
+    "prettier": "^3.6.1",
+    "prisma": "^6.19.3"
   }
 }

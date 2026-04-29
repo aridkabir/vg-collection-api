@@ -61,6 +61,10 @@ export async function updateGame(id, data) {
   if (!data.title) {
     throw createError(400, 'Title is required');
   }
+  
+  if (!data.releaseYear) {
+  throw createError(400, 'Release year is required');
+}
 
   if (!Array.isArray(data.platformIds) || data.platformIds.length === 0) {
     throw createError(400, 'At least one platform is required');

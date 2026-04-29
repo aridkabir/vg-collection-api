@@ -7,6 +7,7 @@ import fs from 'fs';
 
 import authRoutes from './routes/authRoutes.js';
 import gameRoutes from './routes/gameRoutes.js';
+import platformRoutes from './routes/platformRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,6 +25,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.use(express.json());
 
+
 if (process.env.NODE_ENV !== 'test') app.use(morgan('tiny'));
 
 let specs;
@@ -39,6 +41,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/games', gameRoutes);
+app.use('/api/platforms', platformRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running');
