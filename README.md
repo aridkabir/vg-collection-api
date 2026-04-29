@@ -1,5 +1,6 @@
 # Video Game Collection API
 Final Project for ITIS 4166
+
 A REST API for managing a video game collection. Users can create accounts, manage their personal collections, and interact with a shared database of games and platforms.
 
 ---
@@ -9,7 +10,7 @@ A REST API for managing a video game collection. Users can create accounts, mana
 - Node.js
 - Express
 - PostgreSQL
-- Prisma ORM
+- Prisma
 - JWT Authentication
 - Swagger (OpenAPI)
 
