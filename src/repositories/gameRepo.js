@@ -1,7 +1,30 @@
 import prisma from '../config/db.js';
 
-export function findAllGames(sortBy = 'id', order = 'asc') {
+export function findAllGames(options = {}) {
+  const { sortBy = 'id', order = 'asc', genre, platformId, search } = options;
+
   return prisma.game.findMany({
+    where: {
+      ...(genre && {
+        genre: {
+          contains: genre,
+          mode: 'insensitive',
+        },
+      }),
+      ...(search && {
+        title: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      }),
+      ...(platformId && {
+        platforms: {
+          some: {
+            platformId,
+          },
+        },
+      }),
+    },
     orderBy: {
       [sortBy]: order,
     },

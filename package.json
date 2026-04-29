@@ -7,9 +7,10 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "node --env-file=.env --watch --watch-path=src --watch-path=docs --watch-path=prisma src/server.js",
-    "start": "node src/server.js",
-    "seed:dev": "node prisma/seed.js"
+    "dev": "...",
+    "seed:dev": "node prisma/seed.js",
+    "migrate:deploy": "prisma migrate deploy",
+    "seed:prod": "node prisma/seed.js"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",

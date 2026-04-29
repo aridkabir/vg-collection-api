@@ -1,7 +1,26 @@
 import prisma from '../config/db.js';
 
-export function findAllPlatforms(sortBy = 'id', order = 'asc') {
+export function findAllPlatforms(options = {}) {
+  const { sortBy = 'id', order = 'asc', manufacturer, releaseYear, search } = options;
+
   return prisma.platform.findMany({
+    where: {
+      ...(manufacturer && {
+        manufacturer: {
+          contains: manufacturer,
+          mode: 'insensitive',
+        },
+      }),
+      ...(releaseYear && {
+        releaseYear,
+      }),
+      ...(search && {
+        name: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      }),
+    },
     orderBy: {
       [sortBy]: order,
     },

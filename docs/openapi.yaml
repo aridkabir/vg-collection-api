@@ -92,14 +92,27 @@ paths:
           schema:
             type: string
             enum: [id, title, genre, releaseYear, createdAt]
-            example: releaseYear
         - name: order
           in: query
           required: false
           schema:
             type: string
             enum: [asc, desc]
-            example: desc   
+        - name: genre
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: platformId
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
       security: []
       responses:
         '200':
@@ -358,14 +371,27 @@ paths:
           schema:
             type: string
             enum: [id, name, manufacturer, releaseYear]
-            example: releaseYear
         - name: order
           in: query
           required: false
           schema:
             type: string
             enum: [asc, desc]
-            example: asc
+        - name: manufacturer
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: releaseYear
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: Platforms retrieved successfully
@@ -386,7 +412,7 @@ paths:
                   _count:
                     games: 0
 
-                - ...
+                - id: '...'
 
                 - id: 29
                   name: Nintendo Switch™

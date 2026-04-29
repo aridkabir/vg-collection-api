@@ -13,7 +13,19 @@ export async function getAllPlatforms(query) {
   const sortBy = allowedSortFields.includes(query.sortBy) ? query.sortBy : 'id';
   const order = allowedOrders.includes(query.order) ? query.order : 'asc';
 
-  return platformRepo.findAllPlatforms(sortBy, order);
+  const releaseYear = query.releaseYear ? Number(query.releaseYear) : undefined;
+
+  if (query.releaseYear && (!Number.isInteger(releaseYear) || releaseYear <= 0)) {
+    throw createError(400, 'Invalid release year');
+  }
+
+  return platformRepo.findAllPlatforms({
+    sortBy,
+    order,
+    manufacturer: query.manufacturer,
+    releaseYear,
+    search: query.search,
+  });
 }
 
 export async function getPlatformById(id) {

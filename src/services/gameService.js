@@ -13,7 +13,19 @@ export async function getAllGames(query) {
   const sortBy = allowedSortFields.includes(query.sortBy) ? query.sortBy : 'id';
   const order = allowedOrders.includes(query.order) ? query.order : 'asc';
 
-  return gameRepo.findAllGames(sortBy, order);
+  const platformId = query.platformId ? Number(query.platformId) : undefined;
+
+  if (query.platformId && (!Number.isInteger(platformId) || platformId <= 0)) {
+    throw createError(400, 'Invalid platform ID');
+  }
+
+  return gameRepo.findAllGames({
+    sortBy,
+    order,
+    genre: query.genre,
+    search: query.search,
+    platformId,
+  });
 }
 
 export async function getGameById(id) {
