@@ -16,18 +16,18 @@ export async function signup(req, res) {
   }
 }
 
-export async function login(req, res) {
+export async function login(req, res, next) {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
+    return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    const result = await authService.login(email, password);
+    const user = await authService.login(email, password);
 
-    res.status(200).json(result);
-  } catch (err) {
-    res.status(err.status || 500).json({ error: err.message });
+    res.json(user);
+  } catch (error) {
+    next(error);
   }
 }

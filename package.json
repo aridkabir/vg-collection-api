@@ -7,7 +7,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "...",
+    "dev": "node src/server.js",
     "seed:dev": "node prisma/seed.js",
     "migrate:deploy": "prisma migrate deploy",
     "seed:prod": "node prisma/seed.js"

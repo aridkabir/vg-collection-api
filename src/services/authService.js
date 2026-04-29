@@ -2,6 +2,12 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import * as userRepo from '../repositories/userRepo.js';
 
+function createError(status, message) {
+  const err = new Error(message);
+  err.status = status;
+  return err;
+}
+
 export async function signup(email, password) {
   const existingUser = await userRepo.findUserByEmail(email);
 
@@ -30,24 +36,17 @@ export async function login(email, password) {
   const user = await userRepo.findUserByEmail(email);
 
   if (!user) {
-    const error = new Error('Invalid credentials');
-    error.status = 401;
-    throw error;
+    throw createError(401, 'Invalid email or password');
   }
 
-  const validPassword = await bcrypt.compare(password, user.password);
+  const isValid = await bcrypt.compare(password, user.password);
 
-  if (!validPassword) {
-    const error = new Error('Invalid credentials');
-    error.status = 401;
-    throw error;
+  if (!isValid) {
+    throw createError(401, 'Invalid email or password');
   }
 
   const token = jwt.sign(
-    {
-      userId: user.id,
-      role: user.role,
-    },
+    { userId: user.id, role: user.role },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
   );
